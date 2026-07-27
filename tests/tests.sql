@@ -65,3 +65,35 @@ where prd_start_dt < prd_end_dt;
 select 
 distinct cst_marital_status 
 from silver.crm_cust_info
+
+
+
+ -- tests for silver.crm_sales_info
+
+-- check for invalid dates for order date
+SELECT 
+sls_order_dt
+from bronze.crm_sales_details
+where sls_order_dt <=0 or len(sls_order_dt) !=8 or sls_ord_num is null
+
+-- check for invalid dates for shipped date
+SELECT 
+sls_ship_dt
+from bronze.crm_sales_details
+where sls_ship_dt <=0 or len(sls_ship_dt) !=8 or sls_ord_num is null
+
+-- check for invalid dates for due date
+SELECT 
+sls_due_dt
+from bronze.crm_sales_details
+where sls_due_dt <=0 or len(sls_due_dt) !=8 or sls_ord_num is null
+-- check the sales values are null
+
+SELECT * from bronze.crm_sales_details
+where sls_sales is null or sls_sales != sls_quantity* sls_price;
+
+SELECT * from bronze.crm_sales_details
+where sls_price is null or sls_price != sls_sales/ sls_quantity;
+
+SELECT * from bronze.crm_sales_details
+where sls_quantity is null or sls_quantity != sls_sales/ sls_price;
