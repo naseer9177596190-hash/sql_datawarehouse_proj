@@ -97,3 +97,19 @@ where sls_price is null or sls_price != sls_sales/ sls_quantity;
 
 SELECT * from bronze.crm_sales_details
 where sls_quantity is null or sls_quantity != sls_sales/ sls_price;
+
+
+
+
+-- silver erp data
+
+-- selecting invalid bdate
+
+select distinct 
+bdate
+from bronze.erp_cust_az12
+where bdate < '1926-01-01' or bdate >getdate()
+
+-- llets check the diff type of values in gender
+select distinct gen
+from bronze.erp_cust_az12
